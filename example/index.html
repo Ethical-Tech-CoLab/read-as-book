@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>read-as-book — vanilla example</title>
+    <!-- Built output + the library's default styles. Run `npm run build` first,
+         then serve the repo root:  npx serve .  ->  /example/ -->
+    <link rel="stylesheet" href="../styles.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "page-flip": "../node_modules/page-flip/dist/js/page-flip.browser.js"
+        }
+      }
+    </script>
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        font: 16px/1.6 system-ui, sans-serif;
+        background: #faf9f7;
+        color: #1c1a17;
+      }
+      main { text-align: center; padding: 2rem; }
+      button.demo {
+        margin-top: 1rem;
+        padding: 0.7rem 1.4rem;
+        border: 1px solid currentColor;
+        border-radius: 999px;
+        background: transparent;
+        font: inherit;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      code { background: #eeeae4; padding: 0.1em 0.35em; border-radius: 4px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>read-as-book</h1>
+      <p>
+        Point <code>PAGES</code> at your own images — or run
+        <code>npx read-as-book-pages report.pdf --out example/pages</code> and
+        reload.
+      </p>
+      <button class="demo" id="open">Read as book 📖</button>
+    </main>
+
+    <script type="module">
+      import { openBookViewer, loadBookManifest } from "../dist/index.js";
+
+      // Prefer a manifest written by the CLI; fall back to placeholder pages so
+      // the demo still runs in a fresh clone.
+      let pages;
+      let aspect = 0.7727;
+      try {
+        const manifest = await loadBookManifest("./pages/manifest.json");
+        pages = manifest.pages;
+        aspect = manifest.aspect;
+      } catch {
+        pages = Array.from({ length: 8 }, (_, i) => placeholder(i + 1));
+      }
+
+      document.getElementById("open").addEventListener("click", () => {
+        openBookViewer({
+          pages,
+          aspect,
+          title: "Example document",
+          onFlip: (page) => console.log("page", page),
+        });
+      });
+
+      function placeholder(n) {
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="612" height="792">
+          <rect width="100%" height="100%" fill="#fdfcfa"/>
+          <text x="50%" y="50%" text-anchor="middle" font-family="Georgia,serif"
+                font-size="72" fill="#c9c2b8">${n}</text>
+        </svg>`;
+        return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+      }
+    </script>
+  </body>
+</html>

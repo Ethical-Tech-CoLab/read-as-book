@@ -1,0 +1,84 @@
+{
+  "name": "read-as-book",
+  "version": "0.1.0",
+  "description": "Drop-in \"Read as book\" page-turning viewer — flip through a PDF as a real book, in any website. Framework-agnostic core, optional React component, and a CLI that rasterizes a PDF into page images.",
+  "keywords": [
+    "flipbook",
+    "page-flip",
+    "page-turn",
+    "pdf",
+    "book",
+    "viewer",
+    "react"
+  ],
+  "license": "MIT",
+  "author": "Ethical Tech CoLab",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ethical-Tech-CoLab/read-as-book.git"
+  },
+  "homepage": "https://github.com/Ethical-Tech-CoLab/read-as-book#readme",
+  "type": "module",
+  "files": [
+    "dist",
+    "bin",
+    "styles.css",
+    "README.md",
+    "LICENSE"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "default": "./dist/react.js"
+    },
+    "./styles.css": "./styles.css"
+  },
+  "bin": {
+    "read-as-book-pages": "bin/render-pages.mjs"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "page-flip": "^2.0.7"
+  },
+  "peerDependencies": {
+    "@napi-rs/canvas": ">=0.1",
+    "pdfjs-dist": ">=4",
+    "react": ">=18",
+    "sharp": ">=0.33"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "pdfjs-dist": {
+      "optional": true
+    },
+    "@napi-rs/canvas": {
+      "optional": true
+    },
+    "sharp": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@napi-rs/canvas": "^1.0.3",
+    "@types/react": "^19.0.0",
+    "pdfjs-dist": "^6.1.200",
+    "sharp": "^0.35.3",
+    "typescript": "^5.6.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
