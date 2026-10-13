@@ -18,7 +18,13 @@
     "url": "git+https://github.com/Ethical-Tech-CoLab/read-as-book.git"
   },
   "homepage": "https://github.com/Ethical-Tech-CoLab/read-as-book#readme",
+  "bugs": {
+    "url": "https://github.com/Ethical-Tech-CoLab/read-as-book/issues"
+  },
   "type": "module",
+  "sideEffects": [
+    "./styles.css"
+  ],
   "files": [
     "dist",
     "bin",
@@ -46,7 +52,9 @@
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "prepare": "npm run build",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "check": "npm run typecheck && node bin/render-pages.mjs --help > /dev/null",
+    "test": "npm run check"
   },
   "dependencies": {
     "page-flip": "^2.0.7"

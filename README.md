@@ -179,6 +179,13 @@ npx serve .        # then open /example/
 
 The example runs on generated placeholder pages, and picks up
 `example/pages/manifest.json` automatically if you render a real PDF there.
+`example/pages/` is git-ignored, so rendered pages stay local.
+
+To run the checks the repo has (typecheck plus a CLI smoke test):
+
+```bash
+npm run check
+```
 
 ## Notes
 
